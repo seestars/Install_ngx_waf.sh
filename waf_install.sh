@@ -1,5 +1,25 @@
 #!/usr/bin/env bash
 
+Color_Text()
+{
+    echo -e " \e[0;$2m$1\e[0m"
+}
+
+Echo_Green()
+{
+    echo $(Color_Text "$1" "32")
+}
+
+Press_Start()
+{
+    echo ""
+    Echo_Green "Press any key to start...or Press Ctrl+c to cancel"
+    OLDCONFIG=`stty -g`
+    stty -icanon -echo min 1 time 0
+    dd count=1 2>/dev/null
+    stty ${OLDCONFIG}
+}
+
 Select_lnmp_dir()
 {
     echo 'Please select you lnmp directory: '
@@ -22,7 +42,6 @@ Install_ngx_waf()
         Select_lnmp_dir
     else
         Lnmp_Dir=${Cur_Lnmp_Dir}
-        echo "Installation is about to begin."
     fi
 
     echo "+---------------------------------------------------------+"
@@ -30,7 +49,9 @@ Install_ngx_waf()
     echo "+---------------------------------------------------------+"
     Press_Start
 
-    
+    sed -i "/^Nginx_Modules_Options=/ s/'$/ --add-module=\/usr\/local\/src\/ngx_waf'/" ${Lnmp_Dir}/lnmp.conf
+
+    echo ${Lnmp_Dir}|./upgrade.sh nginx
 
 }
 
