@@ -101,11 +101,11 @@ Install_ngx_waf()
         && export LIB_MODSECURITY=/usr/local/modsecurity
 
     sed -i "/^Nginx_Modules_Options=/ s/'$/ --add-module=\/usr\/local\/src\/ngx_waf'/" ${Lnmp_Dir}/lnmp.conf
-    sed -i "/\.\/configure --user=www --group=www --prefix=\/usr\/local\/nginx --with-http_stub_status_module --with-http_ssl_module --with-http_/a\sed -i \'s\/-Werror\/\/\' objs\/Makefile\nsed -i \'s\/\^\\\(CFLAGS\.*\\\)\/\\\1 -fstack-protector-strong -Wno-sign-compare\/\' objs\/Makefile" upgrade_nginx.sh
+    sed -i "/\.\/configure --user=www --group=www --prefix=\/usr\/local\/nginx --with-http_stub_status_module --with-http_ssl_module --with-http_/a\sed -i \'s\/-Werror\/\/\' objs\/Makefile\nsed -i \'s\/\^\\\(CFLAGS\.*\\\)\/\\\1 -fstack-protector-strong -Wno-sign-compare\/\' objs\/Makefile" ${Lnmp_Dir}/include/upgrade_nginx.sh
 
-    echo ${Lnmp_Dir}|./upgrade.sh nginx
+    echo ${Lnmp_Dir}|/upgrade.sh nginx
 
-    echo "The installation is complete. Goodbye~"
+    Echo_Green "The installation is complete. Goodbye~"
 
 }
 
