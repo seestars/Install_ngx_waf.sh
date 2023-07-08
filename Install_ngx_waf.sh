@@ -22,7 +22,7 @@ Press_Start()
 
 Select_lnmp_dir()
 {
-    echo 'Please select you lnmp directory: '
+    echo 'Please enter the lnmp folder of your choice: '
     echo ${Cur_Lnmp_Dir}
 
     read Lnmp_Dir
@@ -31,19 +31,22 @@ Select_lnmp_dir()
 Install_ngx_waf()
 {
     echo "Initializing, please wait."
-    Nginx_Version=`/usr/local/nginx/sbin/nginx -v 2>&1 | cut -c22-`
     Num_Lnmp_Dir=`find / -name 'lnmp*' -type d | wc -l`
-    Cur_Lnmp_Dir=`find / -name 'lnmp*' -type d`
     Lnmp_Dir=""
 
     if [[ ${Num_Lnmp_Dir} == 0 ]]; then
         echo "Your server does not have lnmp installed."
         exit 1
     elif [[ ${Num_Lnmp_Dir} -ge 2 ]]; then
+        Echo_Green "Get the lnmp folder location, please wait a moment."
+        Cur_Lnmp_Dir=`find / -name 'lnmp*' -type d`
         Select_lnmp_dir
     else
-        Lnmp_Dir=${Cur_Lnmp_Dir}
+        Echo_Green "Get the lnmp folder location, please wait a moment."
+        Lnmp_Dir=`find / -name 'lnmp*' -type d`
     fi
+
+    Nginx_Version=`/usr/local/nginx/sbin/nginx -v 2>&1 | cut -c22-`
 
     echo "+---------------------------------------------------------+"
     echo "|    You will install ngx-waf with nginx version ${Nginx_Version}"
@@ -99,6 +102,8 @@ Install_ngx_waf()
         && make -j$(nproc) \
         && make install \
         && export LIB_MODSECURITY=/usr/local/modsecurity
+
+    Echo_Green “Start compiling Ngx_waf.”
 
     sed -i "/^Nginx_Modules_Options=/ s/'$/ --add-module=\/usr\/local\/src\/ngx_waf'/" ${Lnmp_Dir}/lnmp.conf
     sed -i "/\.\/configure --user=www --group=www --prefix=\/usr\/local\/nginx --with-http_stub_status_module --with-http_ssl_module --with-http_/a\sed -i \'s\/-Werror\/\/\' objs\/Makefile\nsed -i \'s\/\^\\\(CFLAGS\.*\\\)\/\\\1 -fstack-protector-strong -Wno-sign-compare\/\' objs\/Makefile" ${Lnmp_Dir}/include/upgrade_nginx.sh
