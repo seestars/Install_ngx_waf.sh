@@ -74,7 +74,7 @@ Install_ngx_waf()
         && make -j$(nproc) && make check -j $(nproc) && make install \
         && export LIB_SODIUM=/usr/local/src/libsodium
 
-    cd/usr/local/src/ngx_waf\
+    cd /usr/local/src/ngx_waf\
         && git clone -b v2.3.0 https://github.com/troydhanson/uthash.git lib/uthash\
         && export LIB_UTHASH=/usr/local/src/ngx_waf/uthash
 
@@ -103,7 +103,8 @@ Install_ngx_waf()
     sed -i "/^Nginx_Modules_Options=/ s/'$/ --add-module=\/usr\/local\/src\/ngx_waf'/" ${Lnmp_Dir}/lnmp.conf
     sed -i "/\.\/configure --user=www --group=www --prefix=\/usr\/local\/nginx --with-http_stub_status_module --with-http_ssl_module --with-http_/a\sed -i \'s\/-Werror\/\/\' objs\/Makefile\nsed -i \'s\/\^\\\(CFLAGS\.*\\\)\/\\\1 -fstack-protector-strong -Wno-sign-compare\/\' objs\/Makefile" ${Lnmp_Dir}/include/upgrade_nginx.sh
 
-    echo ${Lnmp_Dir}|/upgrade.sh nginx
+    cd ${Lnmp_Dir}
+    echo ${Nginx_Version}|./upgrade.sh nginx
 
     Echo_Green "The installation is complete. Goodbye~"
 
