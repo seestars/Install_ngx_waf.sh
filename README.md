@@ -16,3 +16,16 @@
  * 该脚本仅会编译ngx_waf模块，请自行完善网站配置
 > 或等待猴年马月后我再写一个脚本，或者看看我的[手工配置版](https://blog.qvq.one/archives/169/ "LNMP 安装 Current 版的 ngx_waf")🤪 
 
+# Ⅳ 使用教程
+
+**拉取安装**
+```bash
+bash <(curl -fsSL https://raw.githubusercontent.com/seestars/Install_ngx_waf.sh/main/Install_ngx_waf.sh)
+```
+
+或者
+
+```bash
+wget -N --no-check-certificate https://github.com/seestars/Install_ngx_waf.sh/releases/latest/download/Install_ngx_waf.sh && bash Install_ngx_waf.sh
+```
+

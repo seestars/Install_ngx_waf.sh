@@ -55,8 +55,8 @@ Install_ngx_waf()
     echo "+---------------------------------------------------------+"
     Press_Start
 
-    apt update
-    apt install -y libtool m4 automake gcc g++ make git wget libpcre3 libpcre3-dev libmodsecurity3 libmodsecurity-dev libsodium23 libsodium-dev
+    apt-get update
+    apt-get install -y libtool m4 automake gcc g++ make git wget libpcre3 libpcre3-dev libmodsecurity3 libmodsecurity-dev libsodium23 libsodium-dev
 
     Echo_Green "Clone the ngx_waf file"
 
